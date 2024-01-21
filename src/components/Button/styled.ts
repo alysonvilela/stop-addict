@@ -4,7 +4,7 @@ export const ButtonWrapper = styled.button`
   padding: 1.6rem 2.4rem;
   background-color: #335263;
   border: 1px solid #335263;
-  border-radius: 42px;
+  border-radius: 8px;
   font-weight: 700;
   font-size: 1.6rem;
   line-height: 1.6;

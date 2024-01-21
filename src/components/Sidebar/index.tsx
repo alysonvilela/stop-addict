@@ -2,44 +2,13 @@ import * as S from "./styled";
 import { useAddictStore } from "../../store/addict-store";
 import { cx } from "../../utils/cx";
 import { Modal } from "../Modal";
-import { sortAddictByCurrentMonth } from "../../utils/is-in-the-same-year";
 import { useTheme } from "styled-components";
+import { sortAddictByCurrentMonth } from "../../utils/sort-addict-by-current-month";
+import { Ticket } from "../Ticket";
 interface SidebarProps {
   onUse: (addict_id: string) => void;
   onSetting: () => void;
 }
-
-interface TicketProps {
-  id: string;
-  name: string;
-  isUsed?: boolean;
-  dotBg?: string;
-  onClick?: () => void;
-}
-
-export const Ticket = ({ id, name, isUsed, dotBg, onClick }: TicketProps) => {
-  const newId = id.slice(0, 7);
-
-  return (
-    <S.SideBarItem
-      className={cx("filled", isUsed && "used")}
-      dotBg={dotBg}
-      onClick={onClick}
-    >
-      <div className="ticket-content">
-        <div className="title">
-          <p>ticket</p>
-          <span>{name}</span>
-        </div>
-        <p className="id">{newId}</p>
-      </div>
-      <div className="dot"></div>
-      <div className="dot"></div>
-      <div className="dot"></div>
-      <div className="dot"></div>
-    </S.SideBarItem>
-  );
-};
 
 export const Sidebar = ({ onUse }: SidebarProps) => {
   const slots = useAddictStore((state) => state.available_slots);
@@ -54,7 +23,7 @@ export const Sidebar = ({ onUse }: SidebarProps) => {
     <S.SideBarWrapper>
       {monthUsed.length > 0 && (
         <S.Section>
-          <h2>Usados esse mes</h2>
+          <h2>Esse mês você usou {monthUsed.length} tickets!</h2>
           <S.UsedListWrapper>
             <S.UsedList>
               {monthUsed.map((i) => {
@@ -67,8 +36,8 @@ export const Sidebar = ({ onUse }: SidebarProps) => {
       <S.Section className={cx(monthUsed.length && "out")}>
         {reachedMax ? (
           <h2>
-            Pois é :{"("}, você chegou no seu limite, já pensou que pode ter
-            estrapolado esse ano?
+            Pois é colega, <br /> Você chegou no seu limite. Logo menos um novo
+            ano recomeça, e assim você poderá refazer suas metas.
           </h2>
         ) : (
           <>
@@ -103,14 +72,6 @@ export const Sidebar = ({ onUse }: SidebarProps) => {
           </>
         )}
       </S.Section>
-      {/* 
-      <Button
-        icon={iconPlus}
-        onClick={() => {
-          onSetting();
-          add("OWNER");
-        }}
-      /> */}
     </S.SideBarWrapper>
   );
 };

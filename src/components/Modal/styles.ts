@@ -51,8 +51,7 @@ export const ModalContent = styled(Dialog.Content)`
   padding: 1.5rem;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   background-color: ${({ theme }) => theme.colors.neutral[100]};
-  border-radius: 8px;
-
+  border-radius: 16px;
   transition-property: opacity, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;

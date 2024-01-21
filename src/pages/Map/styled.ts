@@ -13,7 +13,9 @@ export const ModalWrapper = styled.div`
 
   h1 {
     font-family: "Inter", Arial, Helvetica, sans-serif;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
   }
 
   .buttons {

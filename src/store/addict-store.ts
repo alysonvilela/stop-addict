@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import { isInSameYear } from "../utils/is-in-the-same-year";
 export interface Addict {
   id: string;
@@ -51,7 +51,6 @@ export const useAddictStore = create<State & Actions>()(
         const lastUse = get().last_used_at!;
 
         if (!isInSameYear(new Date(lastUse)) || !lastUse) {
-          console.log('run add')
           set((old) => {
             const max = old.max_amount_slots;
             const newSlots = [...Array(max)].map(() => makeSlot({ ownerId }));
