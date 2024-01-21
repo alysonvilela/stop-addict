@@ -1,5 +1,5 @@
 import { Pokemon } from "../interfaces/pokemon";
-import { usePokedexStore } from "./pokedex";
+import { usePokedexStore } from "./addict-store";
 import { act, renderHook } from "../__tests__/utils";
 
 export const POKEMON: Omit<Pokemon, "app_id" | "captured_at"> = {

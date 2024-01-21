@@ -1,12 +1,27 @@
 import styled from "styled-components";
-
-import img from "../../assets/images/pageBackground.png";
+import { Button } from "../../components/Button";
 
 export const MapWrapper = styled.div`
   position: relative;
-  background-image: url(${img});
-  background-color: #5dae12;
-  background-size: cover;
-  height: 100vh;
-  background-position: center;
+  background-color: ${({ theme }) => theme.colors.neutral[200]};
+`;
+
+export const ModalWrapper = styled.div`
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+
+  h1 {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: 1.6rem;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 16px;
+  }
+
+  .w-full {
+    width: 100%;
+  }
 `;

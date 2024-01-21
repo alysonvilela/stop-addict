@@ -1,86 +1,46 @@
-import { CharacterStatus } from "../../components/Character";
-import { Pokemon } from "../../interfaces/pokemon";
-import { useCallback, useRef, useState } from "react";
-import { usePokedexStore } from "../../store/pokedex";
-import { useGetPokemon } from "../../services/use-get-pokemon";
+import {  useEffect, useState } from "react";
+import { useAddictStore } from "../../store/addict-store";
 
 export const useMapViewModel = () => {
-  const [status, setStatus] = useState<CharacterStatus>("INITIAL");
-  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const { slots } = usePokedexStore((state) => ({
-    slots: state.slots,
-  }));
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const add = useAddictStore(state => state.add)
+  const use = useAddictStore(state => state.use)
+  const data = useAddictStore(state => ({
+    used: state.used_slots.length,
+    max: state.max_amount_slots
+  }))
 
-  const canAdd = slots.some((val) => !val);
-
-  const { data, refetch, remove } = useGetPokemon({
-    onSuccess: (data) => {
-      setStatus("INITIAL");
-      if (triggerRef.current) {
-        triggerRef.current.click();
-      }
-      setSelectedPokemon(data);
-    },
-  });
-
-  const onHover = useCallback(() => {
-    if (status !== "LOADING") {
-      setStatus("HOVER");
-    }
-  }, [status]);
-
-  const onClick = () => {
-    if (canAdd && status !== "LOADING") {
-      remove();
-      setTimeout(() => setStatus("LOADING"), 500);
-      setTimeout(() => refetch(), 1000);
-    }
-  };
-
-  const onHoverOut = useCallback(async () => {
-    {
-      if (status === "HOVER" || status === "ERROR") {
-        setTimeout(() => setStatus("INITIAL"), 500);
-      }
-    }
-  }, [status]);
-
-  const onSelectPokemon = (pokemon: Pokemon) => {
-    setStatus("INITIAL");
-    if (triggerRef.current) {
-      triggerRef.current.click();
-    }
-    setSelectedPokemon(pokemon);
-  };
-
-  const onCreatePokemon = () => {
-    if (triggerRef.current) {
-      triggerRef.current.click();
-    }
-    setSelectedPokemon(null);
+  const onUse = (id: string) => {
+    setSelectedId(id);
   };
 
   const onCloseModal = () => {
-    remove();
-    setSelectedPokemon(null);
+    setSelectedId(null);
   };
+
+  const onConfirmUse = () => {
+    use(selectedId!) 
+    setSelectedId(null)
+  }
+
+  const onSetting = () => {
+
+  }
+
+  useEffect(() => {
+    add('OWNER_ID')
+  }, [add])
 
   return {
     handlers: {
-      onHover,
-      onClick,
       onCloseModal,
-      onSelectPokemon,
-      onCreatePokemon,
-      onHoverOut,
+      onConfirmUse,
+      onUse,
+      onSetting
     },
     states: {
-      selectedPokemon,
       data,
-      status,
-      canAdd,
-      triggerRef,
+      selectedId,
     },
   };
 };
