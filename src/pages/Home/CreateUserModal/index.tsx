@@ -14,8 +14,8 @@ const createUserSchema = z.object({
   addict_name: z.string().min(2, "Adicione um valor válido"),
   yearQuantity: z.coerce
     .number()
-    .min(1, "Adicione um número")
-    .nonnegative("O número não pode ser negativo"),
+    .nonnegative("O número não pode ser negativo")
+    .min(1, "Adicione um número palpável"),
 });
 
 type FormValues = z.infer<typeof createUserSchema>;
