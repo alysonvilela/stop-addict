@@ -3,7 +3,7 @@ import { useAddictStore } from "../../store/addict-store";
 import { cx } from "../../utils/cx";
 import { Modal } from "../Modal";
 import { useTheme } from "styled-components";
-import { sortAddictByCurrentMonth } from "../../utils/sort-addict-by-current-month";
+import { feedMonthAddict } from "../../utils/feed-month-addict";
 import { Ticket } from "../Ticket";
 interface SidebarProps {
   onUse: (addict_id: string) => void;
@@ -18,7 +18,7 @@ export const Sidebar = ({ onUse }: SidebarProps) => {
 
   const theme = useTheme();
 
-  const monthUsed = usedSlots.sort(sortAddictByCurrentMonth);
+  const monthUsed = feedMonthAddict(usedSlots);
   const reachedMax = !slots.length;
 
   return (
