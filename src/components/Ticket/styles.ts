@@ -1,4 +1,13 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+
+const contentShow = keyframes`
+   from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export const Wrapper = styled.li<{ dotBg?: string }>`
   position: relative;
@@ -24,6 +33,10 @@ export const Wrapper = styled.li<{ dotBg?: string }>`
     );
   min-height: 110px;
   padding: 16px;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  animation: ${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1);
 
   .ticket-content {
     border: 4px solid ${({ theme }) => theme.colors.tickets.detail};
@@ -99,5 +112,11 @@ export const Wrapper = styled.li<{ dotBg?: string }>`
 
   &.used {
     opacity: 0.6;
+  }
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0px 10px 16px 0px #091e420f;
+    transform: scale(1.03);
   }
 `;

@@ -14,6 +14,8 @@ export const Sidebar = ({ onUse }: SidebarProps) => {
   const slots = useAddictStore((state) => state.available_slots);
   const usedSlots = useAddictStore((state) => state.used_slots);
   const maxAmount = useAddictStore((state) => state.max_amount_slots);
+  const name = useAddictStore((state) => state.addict_name);
+
   const theme = useTheme();
 
   const monthUsed = usedSlots.sort(sortAddictByCurrentMonth);
@@ -27,7 +29,7 @@ export const Sidebar = ({ onUse }: SidebarProps) => {
           <S.UsedListWrapper>
             <S.UsedList>
               {monthUsed.map((i) => {
-                return <Ticket key="id" id={i.id} name="cigarro" isUsed />;
+                return <Ticket key="id" id={i.id} name={name} isUsed />;
               })}
             </S.UsedList>
           </S.UsedListWrapper>
@@ -53,7 +55,7 @@ export const Sidebar = ({ onUse }: SidebarProps) => {
                     <Modal.Trigger key={`sidebar-${idx}`} asChild>
                       <Ticket
                         id={i.id}
-                        name="cigarro"
+                        name={name}
                         onClick={() => {
                           if (i) {
                             onUse(i.id);

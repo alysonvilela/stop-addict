@@ -1,14 +1,10 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddictStore } from "../../store/addict-store";
 
 export const useMapViewModel = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const add = useAddictStore(state => state.add)
-  const use = useAddictStore(state => state.use)
-  const data = useAddictStore(state => ({
-    used: state.used_slots.length,
-    max: state.max_amount_slots
-  }))
+  const add = useAddictStore((state) => state.add);
+  const use = useAddictStore((state) => state.use);
 
   const onUse = (id: string) => {
     setSelectedId(id);
@@ -19,28 +15,22 @@ export const useMapViewModel = () => {
   };
 
   const onConfirmUse = () => {
-    use(selectedId!) 
-    setSelectedId(null)
-  }
+    use(selectedId!);
+    setSelectedId(null);
+  };
 
-  const onSetting = () => {
-
-  }
+  const onSetting = () => {};
 
   useEffect(() => {
-    add('OWNER_ID')
-  }, [add])
+    add("OWNER_ID");
+  }, [add]);
 
   return {
     handlers: {
       onCloseModal,
       onConfirmUse,
       onUse,
-      onSetting
-    },
-    states: {
-      data,
-      selectedId,
+      onSetting,
     },
   };
 };

@@ -13,9 +13,11 @@ interface State {
   used_slots: Addict[];
   max_amount_slots: number;
   last_used_at: string | null;
+  addict_name: string;
   started_at: string;
 }
 interface Actions {
+  setAddict: (name: string, maxQtty: number) => void;
   add: (owner_id: string) => void;
   use: (id: string) => void;
   forceReset: () => void;
@@ -26,6 +28,7 @@ const initialState: State = {
   used_slots: [],
   max_amount_slots: 10,
   last_used_at: null,
+  addict_name: "",
   started_at: new Date().toISOString(),
 };
 
@@ -46,6 +49,13 @@ export const useAddictStore = create<State & Actions>()(
   persist(
     (set, get) => ({
       ...initialState,
+
+      setAddict: (name: string, maxQtty: number) => {
+        set({
+          addict_name: name,
+          max_amount_slots: maxQtty,
+        });
+      },
 
       add: (ownerId) => {
         const lastUse = get().last_used_at!;

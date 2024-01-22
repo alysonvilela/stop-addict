@@ -1,12 +1,14 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../store/user-store";
 
 export const useHomeViewModel = () => {
   const navigate = useNavigate();
-  function handleStart() {
-    navigate("/map");
-  }
+  const user = useUserStore((state) => state.user);
 
-  return {
-    handleStart,
-  };
+  useEffect(() => {
+    if (user) {
+      navigate("/feed");
+    }
+  }, [navigate, user]);
 };
