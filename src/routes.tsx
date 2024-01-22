@@ -18,7 +18,7 @@ const router = createBrowserRouter(
       <Route
         path="/feed"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute to="/">
             <MapPage />
           </ProtectedRoute>
         }
