@@ -1,4 +1,3 @@
-import React from "react";
 import * as S from "./styles";
 import { Modal } from "../../../components/Modal";
 import { Button } from "../../../components/Button";
