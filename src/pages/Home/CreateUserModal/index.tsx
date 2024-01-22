@@ -28,6 +28,11 @@ export const CreateUserModal = () => {
     formState: { errors },
   } = useForm<FormValues>({
     mode: "all",
+    defaultValues: {
+      addict_name: "",
+      name: "",
+      yearQuantity: 0,
+    },
     resolver: zodResolver(createUserSchema),
   });
   const navigate = useNavigate();
@@ -56,7 +61,6 @@ export const CreateUserModal = () => {
             control={control}
             label={`Quantidade maxima nesse ano`}
             suffix="/ano"
-            error={errors?.yearQuantity}
             {...register("yearQuantity")}
           />
         </section>

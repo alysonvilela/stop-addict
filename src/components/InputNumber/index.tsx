@@ -1,9 +1,4 @@
-import {
-  Controller,
-  FieldError,
-  FieldValues,
-  UseControllerProps,
-} from "react-hook-form";
+import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
 import chevron from "../../assets/images/chevronDownBlack.png";
 import * as S from "./styled";
 
@@ -16,7 +11,6 @@ interface InputNumberProps<T extends FieldValues>
   className?: string;
   label?: React.ReactNode;
   suffix?: string;
-  error?: FieldError;
 }
 
 export const InputNumber = <T extends FieldValues>({
@@ -25,7 +19,6 @@ export const InputNumber = <T extends FieldValues>({
   className,
   wrapperClassName,
   label,
-  error,
   suffix,
   ...props
 }: InputNumberProps<T>) => {
@@ -33,7 +26,8 @@ export const InputNumber = <T extends FieldValues>({
     <Controller
       name={name}
       control={control}
-      render={({ field }) => {
+      render={({ field, formState }) => {
+        const error = formState.errors[field.name];
         return (
           <>
             <S.InputNumberWrapper className={wrapperClassName}>
@@ -72,7 +66,7 @@ export const InputNumber = <T extends FieldValues>({
               </S.InputContent>
             </S.InputNumberWrapper>
             {error?.message && (
-              <InputErrorMessage>{error.message}</InputErrorMessage>
+              <InputErrorMessage>{String(error?.message)}</InputErrorMessage>
             )}
           </>
         );
