@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAddictStore } from "../../store/addict-store";
+import { useUserStore } from "../../store/user-store";
 
 export const useMapViewModel = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const add = useAddictStore((state) => state.add);
   const use = useAddictStore((state) => state.use);
+  const userId = useUserStore((state) => state.user?.id);
 
   const onUse = (id: string) => {
     setSelectedId(id);
@@ -22,8 +24,10 @@ export const useMapViewModel = () => {
   const onSetting = () => {};
 
   useEffect(() => {
-    add("OWNER_ID");
-  }, [add]);
+    if (userId) {
+      add(userId);
+    }
+  }, [add, userId]);
 
   return {
     handlers: {
